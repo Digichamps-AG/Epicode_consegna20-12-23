@@ -1,0 +1,108 @@
+#Codice per linguaggio mysql, AG
+
+#Crea tabella aereoporto
+CREATE TABLE aereoporto (
+    città TEXT NOT NULL,
+    nazione TEXT NOT NULL,
+    numPiste INT);
+
+#Inserisco nella tabella aereoporto 10 righe
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Roma", "Italia", 10);
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Torino", "Italia", 4);
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Bologna", "Italia", 7);
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Londra", "UK", "0");
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Ginevra", "Svizzera", 19);
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Milano", "Italia", "0");
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Pisa", "Italia", "0");
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("New York", "USA", "0");
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Texas", "USA", 2);
+INSERT INTO aereoporto (città, nazione, numPiste) VALUES ("Bari", "Italia", 100);
+
+#Crea tabella volo
+CREATE TABLE volo (
+   idVolo VARCHAR(5) NOT NULL PRIMARY KEY UNIQUE, #per usare una primary key non si può usare un dato di tipo testo
+    giornoSett TEXT,
+    cittaPart TEXT, #non funziona se scrivo "città" accentato
+    oraPart TIME,
+    cittaArr TEXT,
+    OraArr TIME,
+    tipoAereo TEXT);
+
+#Inserisco nella tabella volo 10 righe
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA1", "lunedì", "Bologna", "10:00:00", "Milano", "11:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA2", "martedì", "Roma", "14:00:00", "Torino", "16:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA3", "mercoledì", "Torino", "17:00:00", "Milano", "17:30:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA4", "giovedì", "Torino", "19:00:00", "UK", "23:00:00", "commerciale");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA5", "venerdì", "Londra", "10:00:00", "Milano", "14:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA6", "sabato", "New York", "23:30:00", "Bologna", "11:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA7", "domenica", "Bari", "09:00:00", "Milano", "13:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA8", "lunedì", "Bologna", "10:00:00", "Bari", "17:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AAAA9", "martedì", "Londra", "06:00:00", "Bari", "19:00:00", "linea");
+INSERT INTO volo (idVolo, giornoSett, cittaPart, oraPart, cittaArr, oraArr, tipoAereo) 
+    VALUES ("AZ274", "mercoledì", "Bologna", "14:00:00", "Milano", "16:00:00", "privato");
+
+#Crea tabella aereo
+CREATE TABLE aereo (
+    tipoAereo TEXT,
+    numPasseggeri INT,
+    qtaMerci INT);
+
+#Inserisco nella tabella aereo 10 righe
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("linea", 100, 10);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("linea", 150, 0);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("commerciale", 5, 200);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("commerciale", 2, 444);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("privato", 2, 0);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("linea", 200, 20);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("commerciale", 20, 5000);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("privato", 1, 0);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("linea", 500, 5);
+INSERT INTO aereo (tipoAereo, numPasseggeri, qtaMerci) VALUES ("linea", 50, 0);
+
+
+#Estrarre le città di cui non è noto il numero di piste=estrarre righe dalla tabella aereoporto
+SELECT città FROM aereoporto WHERE numPiste = "NA"; #mettendo come valore numPiste NULL la ricerca non dava errori, ma non dava nemmeno risultati; 
+#risolto mettendo 0 tra apici
+
+#Estrarre i tipoAereo dei voli che partono da Torino = estrarre righe dalla tabella volo
+SELECT tipoAereo FROM volo WHERE cittaPart = "Torino";
+
+#Estrarre le cittaPart per i voli con cittaArr=Bologna, = estrarre righe dalla tabella volo
+SELECT cittaPart FROM volo WHERE cittaArr = "Bologna";
+
+#Estrarre cittaPart e cittaArr  di idVolo=AZ274, = estrarre righe dalla tabella volo
+SELECT cittaPart, cittaArr FROM volo WHERE idVolo = "AZ274";
+
+################################################################################################################################################
+#Possibili domande:
+#In quali giorni partono voli dopo le 16?
+SELECT giornoSett FROM volo WHERE oraPart > "16:00:00";
+
+#Quale aereo(idVolo) parte da Roma e arriva a Torino?
+SELECT idVolo FROM volo WHERE cittaPart="Roma" AND cittaArr="Torino";
+
+#Quale tipo di aereo (tipoAereo) parte alle 19:00:00 o arriva a Bari?
+SELECT tipoAereo FROM volo WHERE oraPart="19:00:00" OR cittaArr="Bari";
+
+#Che tipi di aerei(tipoAereo) ha posti(numPasseggeri) diversi da 0 e maggiori di 1?
+SELECT tipoAereo FROM aereo WHERE numPasseggeri>0 AND numPasseggeri<2;
+
+#Aggiungi una nuova colonna alla tabella volo con il prezzo del biglietto
+ALTER TABLE volo ADD COLUMN prezzo FLOAT;
+
+#Aggiungi i prezzi dei voli (tutti i voli privati costano 10.000€, quelli di linea 199.99, quelli commerciali 0;
+UPDATE volo SET prezzo = 199.99 WHERE tipoAereo="linea";
+UPDATE volo SET prezzo = 10000 WHERE tipoAereo="privato";
+UPDATE volo SET prezzo = 0 WHERE tipoAereo="commerciale";
+
+#estrai dalla nuova colonna il tipo di aereo e il prezzo del biglietto
+SELECT tipoAereo, prezzo FROM volo;
